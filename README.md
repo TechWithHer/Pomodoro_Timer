@@ -13,8 +13,5 @@ This tool helps you manage your work and break sessions using the proven **Pomod
 - Beep alert or desktop notification (Linux)
 - Fully offline & portable Bash script
 
----
-
-## 🚀 How to Run: Clone the repo and run in your terminal
 
 
