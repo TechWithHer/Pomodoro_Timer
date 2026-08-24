@@ -1,4 +1,3 @@
-```bash
 #!/usr/bin/env bash
 # Pomodoro Timer v1.0.0
 # Author: Ayushi Singh (@TechWithHer)
@@ -9,14 +8,14 @@ set -euo pipefail
 VERSION="1.0.0"
 
 # ─────────────────────────────────────────────
-# Defaults
+# Configuration
 # ─────────────────────────────────────────────
 
-WORK_MIN=25
-BREAK_MIN=5
-CYCLES=4
-LOG_ENABLED=false
-SILENT_MODE=false
+WORK_MIN="${1:-25}"
+BREAK_MIN="${2:-5}"
+CYCLES="${3:-4}"
+LOG_ENABLED="${4:-false}"
+SILENT_MODE="${5:-false}"
 
 LOG_DIR="./logs"
 
@@ -87,17 +86,20 @@ countdown() {
     local key=""
 
     while (( total_seconds > 0 )); do
+
         printf "\r⏳ %02d:%02d remaining...  [h: help | Ctrl+C: exit]" \
             "$((total_seconds / 60))" \
             "$((total_seconds % 60))"
 
         key=""
 
-        if read -rsn1 -t 1 key; then
+        if [[ -t 0 ]] && read -rsn1 -t 1 key; then
             if [[ "$key" == "h" ]]; then
                 echo
                 show_help
             fi
+        else
+            sleep 1
         fi
 
         total_seconds=$((total_seconds - 1))
@@ -108,34 +110,6 @@ countdown() {
 }
 
 # ─────────────────────────────────────────────
-# Argument Parsing
-# ─────────────────────────────────────────────
-
-POSITIONAL=()
-
-for arg in "$@"; do
-    case "$arg" in
-        --help|-h)
-            show_help
-            exit 0
-            ;;
-        --silent)
-            SILENT_MODE=true
-            ;;
-        --log)
-            LOG_ENABLED=true
-            ;;
-        *)
-            POSITIONAL+=("$arg")
-            ;;
-    esac
-done
-
-WORK_MIN="${POSITIONAL[0]:-$WORK_MIN}"
-BREAK_MIN="${POSITIONAL[1]:-$BREAK_MIN}"
-CYCLES="${POSITIONAL[2]:-$CYCLES}"
-
-# ─────────────────────────────────────────────
 # Validation
 # ─────────────────────────────────────────────
 
@@ -143,7 +117,7 @@ if ! is_positive_int "$WORK_MIN" ||
    ! is_positive_int "$BREAK_MIN" ||
    ! is_positive_int "$CYCLES"; then
 
-    echo "${RED}Error: work, break, and cycles must be positive integers.${RESET}"
+    echo "${RED}Error: Work, break, and cycles must be positive integers.${RESET}"
     exit 1
 fi
 
@@ -175,6 +149,7 @@ for ((i = 1; i <= CYCLES; i++)); do
     log "Work session ${i} completed"
 
     if (( i < CYCLES )); then
+
         echo -e "\n${RED}💤 Break${RESET}"
         log "Break ${i} started"
 
@@ -190,4 +165,3 @@ echo -e "\n${YELLOW}🎉 All sessions complete. Great job!${RESET}"
 
 notify "Pomodoro" "Pomodoro session complete!"
 log "Session completed successfully"
-```
