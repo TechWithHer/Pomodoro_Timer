@@ -26,13 +26,10 @@ Bash Timer
    ├── Logging
    └── Notifications
 ```
-
-<<<<<<< HEAD
 =======
 ## CI/CD
 
 GitHub Actions automates the project workflow.
->>>>>>> e34e3dd (Added CI/CD)
 
 **CI** checks:
 
