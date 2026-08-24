@@ -1,0 +1,28 @@
+name: CD
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create package
+        run: |
+          mkdir -p release
+          tar -czf release/pomodoro-${GITHUB_REF_NAME}.tar.gz \
+            --exclude=".git" \
+            --exclude=".github" \
+            .
+
+      - name: Upload package
+        uses: actions/upload-artifact@v4
+        with:
+          name: pomodoro-${{ github.ref_name }}
+          path: release/pomodoro-${{ github.ref_name }}.tar.gz
