@@ -22,6 +22,7 @@
 - Improved error messages
 - Cleaner Bash syntax
 - Inline comments for better understanding
+<<<<<<< HEAD
   
 ## [v1.0.0] - 2025-06-21
 ### Added
@@ -33,3 +34,28 @@
 ### Changed
 - Command-line arguments override config
 - Help message improved and includes defaults
+=======
+
+## [v1.0.0] - 2026-08-24
+### Added
+- Python wrapper and added .sh inside it.
+- Simplified the code 
+- Added 'h' key for quick help access
+
+### Changed
+- Improved the complexity
+- Cleaned the code
+
+## [v1.0.1] - 2026-08-24
+### Added
+- Added ci.yml and cd.yml for automation
+- In ci.yml added: 
+    - python runner version checks
+    - syntax checks for .sh
+- In cd.yml added:
+    - delivery of a package after every trigger
+
+### Changed
+- Manual deployment to auto deployment with syntax and version checks
+- Cleaned the code
+>>>>>>> e34e3dd (Added CI/CD)

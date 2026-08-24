@@ -1,17 +1,108 @@
-# ⏱️ Pomodoro Timer (Terminal Edition)
+# Pomodoro Timer
 
-A simple Pomodoro Timer written in pure Bash for focus and productivity.
+A simple CLI Pomodoro Timer built with **Python and Bash**, using Python `subprocess` to orchestrate Bash automation.
 
-This tool helps you manage your work and break sessions using the proven **Pomodoro Technique** — all from your terminal, with no external dependencies.
+## Features
 
----
+* Work, break, and cycle configuration
+* Countdown timer
+* Runtime help with `h`
+* `Ctrl+C` to stop the timer
+* Optional logging
+* Optional desktop notifications
+* Python + Bash automation
+* GitHub Actions CI/CD automation
 
-## 📦 Features
+## Architecture
 
-- Customizable work/break durations
-- Terminal UI using `tput` (colored messages)
-- Beep alert or desktop notification (Linux)
-- Fully offline & portable Bash script
+```text
+Python
+   │
+   │ subprocess
+   ▼
+Bash Timer
+   │
+   ├── Countdown
+   ├── Logging
+   └── Notifications
+```
 
+<<<<<<< HEAD
+=======
+## CI/CD
 
+GitHub Actions automates the project workflow.
+>>>>>>> e34e3dd (Added CI/CD)
 
+**CI** checks:
+
+* Python runner/version
+* Bash syntax
+
+**CD** delivers a packaged version of the project after the workflow trigger.
+
+```text
+Push
+ ↓
+CI Checks
+ ↓
+CD
+ ↓
+Release Package 📦
+```
+
+## Usage
+
+```bash
+./pomodoro.sh
+```
+
+Custom timer:
+
+```bash
+./pomodoro.sh 25 5 4
+```
+
+Enable logging:
+
+```bash
+./pomodoro.sh 25 5 4 --log
+```
+
+Silent mode:
+
+```bash
+./pomodoro.sh 25 5 4 --silent
+```
+
+## Runtime Controls
+
+| Key      | Action     |
+| -------- | ---------- |
+| `h`      | Show help  |
+| `Ctrl+C` | Stop timer |
+
+## Logging
+
+When logging is enabled:
+
+```text
+logs/session-YYYY-MM-DD.log
+```
+
+## Requirements
+
+* Python 3
+* Bash
+* Linux/macOS
+* `notify-send` for Linux desktop notifications (optional)
+
+## Version
+
+Current version: **v1.0.1**
+
+See [CHANGELOG.md](CHANGELOG.md) for release history.
+
+## License
+
+MIT
