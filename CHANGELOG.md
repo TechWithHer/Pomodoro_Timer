@@ -58,4 +58,3 @@
 ### Changed
 - Manual deployment to auto deployment with syntax and version checks
 - Cleaned the code
->>>>>>> e34e3dd (Added CI/CD)
