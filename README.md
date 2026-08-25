@@ -103,3 +103,13 @@ See [CHANGELOG.md](CHANGELOG.md) for release history.
 ## License
 
 MIT
+
+
+## Related Projects
+
+This project is part of the **DevOps Learning Journey** by TechWithHer.
+
+Explore the complete course and project series:
+
+[DevOps Learning Journey — TechWithHer](https://ayushisingh.notion.site/Learn-Complete-DevOps-with-TechWithHer-d60df188b81e8221a5570156f5f8b477?source=copy_link)
+
