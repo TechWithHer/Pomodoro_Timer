@@ -50,26 +50,8 @@ Release Package 📦
 
 ## Usage
 
-```bash
-./pomodoro.sh
-```
-
-Custom timer:
-
-```bash
-./pomodoro.sh 25 5 4
-```
-
-Enable logging:
-
-```bash
-./pomodoro.sh 25 5 4 --log
-```
-
-Silent mode:
-
-```bash
-./pomodoro.sh 25 5 4 --silent
+```text
+python app.py
 ```
 
 ## Runtime Controls
@@ -96,7 +78,7 @@ logs/session-YYYY-MM-DD.log
 
 ## Version
 
-Current version: **v1.0.1**
+Current version: **v1.0.2**
 
 See [CHANGELOG.md](CHANGELOG.md) for release history.
 
@@ -107,9 +89,7 @@ MIT
 
 ## Related Projects
 
-This project is part of the **DevOps Learning Journey** by TechWithHer.
-
-Explore the complete course and project series:
+This project is part of the **DevOps Learning Journey** by TechWithHer. Explore the complete course and project series:
 
 [DevOps Learning Journey — TechWithHer](https://ayushisingh.notion.site/Learn-Complete-DevOps-with-TechWithHer-d60df188b81e8221a5570156f5f8b477?source=copy_link)
 
