@@ -1,34 +1,50 @@
 name: CI
 
 on:
-    push:
-        branches:
-            - main
-    pull_request:
-        branches:
-            - main
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
 
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
+  validate:
+    name: Validate Project
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v3 
+    steps:
 
-            - name: Set up Python
-              uses: actions/setup-python@v4
-              with:
-                  python-version: '3.11'
+      # Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-            - name: Install ShellCheck
-              run: sudo apt-get update && sudo apt-get install -y shellcheck
 
-            - name: Run ShellCheck, Shell Script Linter
-              run: |
-                find . -name "*.sh" -exec shellcheck {} \;
+      # Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-            - name: Bash Syntax Check 
-              run: |
-                find . -name "*.sh" -exec bash -n {} \;
+
+      # Install ShellCheck
+      - name: Install ShellCheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+
+
+      # Lint shell scripts
+      - name: Run ShellCheck
+        run: |
+          find . -type f -name "*.sh" -print0 |
+            xargs -0 -r shellcheck
+
+
+      # Validate Bash syntax
+      - name: Run Bash syntax check
+        run: |
+          find . -type f -name "*.sh" -print0 |
+            xargs -0 -r bash -n
