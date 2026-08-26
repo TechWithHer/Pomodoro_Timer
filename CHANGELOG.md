@@ -58,3 +58,8 @@
 ### Changed
 - Manual deployment to auto deployment with syntax and version checks
 - Cleaned the code
+
+## [v1.0.2] - 2026-08-26
+### Changed
+- Cleaned up and tested ci.yaml 
+- Rewritten the code to correct the log file structure

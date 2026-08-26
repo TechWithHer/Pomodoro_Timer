@@ -11,13 +11,12 @@ VERSION="1.0.0"
 # Configuration
 # ─────────────────────────────────────────────
 
-WORK_MIN="${1:-25}"
-BREAK_MIN="${2:-5}"
-CYCLES="${3:-4}"
-LOG_ENABLED="${4:-false}"
-SILENT_MODE="${5:-false}"
+WORK_MIN=25
+BREAK_MIN=5
+CYCLES=4
 
 LOG_DIR="./logs"
+LOG_FILE="${LOG_DIR}/session-$(date '+%Y-%m-%d').log"
 
 # ─────────────────────────────────────────────
 # Colors
@@ -48,30 +47,24 @@ show_help() {
     echo "h       Show this help"
     echo "Ctrl+C  Stop the timer"
     echo
-    echo "Work   : $WORK_MIN minutes"
-    echo "Break  : $BREAK_MIN minutes"
-    echo "Cycles : $CYCLES"
+    echo "Work   : ${WORK_MIN} minutes"
+    echo "Break  : ${BREAK_MIN} minutes"
+    echo "Cycles : ${CYCLES}"
     echo
 }
 
-is_positive_int() {
-    [[ "$1" =~ ^[1-9][0-9]*$ ]]
-}
-
 log() {
-    [[ "$LOG_ENABLED" == true ]] || return 0
+    local message="$1"
 
     mkdir -p "$LOG_DIR"
 
-    echo "[$(date '+%H:%M:%S')] $1" \
-        >> "$LOG_DIR/session-$(date '+%Y-%m-%d').log"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $message" \
+        >> "$LOG_FILE"
 }
 
 notify() {
     local title="$1"
     local message="$2"
-
-    [[ "$SILENT_MODE" == true ]] && return 0
 
     if command -v notify-send >/dev/null 2>&1; then
         notify-send "$title" "$message"
@@ -110,29 +103,18 @@ countdown() {
 }
 
 # ─────────────────────────────────────────────
-# Validation
-# ─────────────────────────────────────────────
-
-if ! is_positive_int "$WORK_MIN" ||
-   ! is_positive_int "$BREAK_MIN" ||
-   ! is_positive_int "$CYCLES"; then
-
-    echo "${RED}Error: Work, break, and cycles must be positive integers.${RESET}"
-    exit 1
-fi
-
-# ─────────────────────────────────────────────
-# Start Timer
+# Start
 # ─────────────────────────────────────────────
 
 clear
 
 echo -e "${BLUE}Pomodoro Timer v${VERSION}${RESET}"
 echo "Work: ${WORK_MIN} min | Break: ${BREAK_MIN} min | Cycles: ${CYCLES}"
-echo "Silent: ${SILENT_MODE} | Logging: ${LOG_ENABLED}"
 echo "────────────────────────────────────────────"
 
-log "Session started: ${WORK_MIN}/${BREAK_MIN}, ${CYCLES} cycles"
+log "========================================"
+log "Pomodoro session started"
+log "Configuration: ${WORK_MIN} min work / ${BREAK_MIN} min break / ${CYCLES} cycles"
 
 # ─────────────────────────────────────────────
 # Pomodoro Loop
@@ -140,28 +122,47 @@ log "Session started: ${WORK_MIN}/${BREAK_MIN}, ${CYCLES} cycles"
 
 for ((i = 1; i <= CYCLES; i++)); do
 
+    # Work session
     echo -e "\n${GREEN}▶ Work Session ${i}/${CYCLES}${RESET}"
-    log "Work session ${i} started"
+
+    log "Work session ${i}/${CYCLES} started"
 
     countdown "$WORK_MIN"
 
-    notify "Pomodoro" "Work session complete. Break time!"
-    log "Work session ${i} completed"
+    log "Work session ${i}/${CYCLES} completed"
 
+    notify \
+        "Pomodoro" \
+        "Work session ${i} complete. Break time!"
+
+    # Break
     if (( i < CYCLES )); then
 
-        echo -e "\n${RED}💤 Break${RESET}"
+        echo -e "\n${RED}💤 Break ${i}/${CYCLES}${RESET}"
+
         log "Break ${i} started"
 
         countdown "$BREAK_MIN"
 
-        notify "Pomodoro" "Break complete. Back to work!"
         log "Break ${i} completed"
+
+        notify \
+            "Pomodoro" \
+            "Break complete. Back to work!"
+
     fi
 
 done
 
+# ─────────────────────────────────────────────
+# Completion
+# ─────────────────────────────────────────────
+
 echo -e "\n${YELLOW}🎉 All sessions complete. Great job!${RESET}"
 
-notify "Pomodoro" "Pomodoro session complete!"
-log "Session completed successfully"
+notify \
+    "Pomodoro" \
+    "Pomodoro session complete!"
+
+log "Pomodoro session completed successfully"
+log "========================================"
