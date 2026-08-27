@@ -80,8 +80,9 @@ logs/session-YYYY-MM-DD.log
 
 Current version: **v1.0.2**
 
-See [CHANGELOG.md](CHANGELOG.md) for release history.
-[Project Documentation and related Projects][https://ayushisingh.notion.site/Projects-Documentation-3c7df188b81e807a9e4ee0d1ff36c7d5?source=copy_link]
+- See [CHANGELOG.md](CHANGELOG.md) for release history.
+
+- [Project Documentation and related Projects](https://ayushisingh.notion.site/Projects-Documentation-3c7df188b81e807a9e4ee0d1ff36c7d5?source=copy_link)
 
 ## License
 
