@@ -39,13 +39,25 @@ GitHub Actions automates the project workflow.
 **CD** delivers a packaged version of the project after the workflow trigger.
 
 ```text
-Push
- ↓
-CI Checks
- ↓
-CD
- ↓
-Release Package 📦
+Feature branch
+      ↓
+Push to GitHub
+      ↓
+Open Pull Request → main
+      ↓
+CI runs automatically
+      ↓
+CI passes ✅
+      ↓
+Code review by reviewer
+      ↓
+Reviewer approves ✅
+      ↓
+Manual merge to main
+      ↓
+Push to main triggers CI again
+      ↓
+Main branch validation ✅
 ```
 
 ## Usage
