@@ -59,6 +59,22 @@ Push to main triggers CI again
       ↓
 Main branch validation ✅
 ```
+CD Flow
+```
+Tag
+↓
+Checkout
+↓
+Package
+↓
+Verify package exists
+↓
+Inspect package contents
+↓
+GitHub Release
+↓
+GitHub Validation
+```
 
 ## Usage
 
