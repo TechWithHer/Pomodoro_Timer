@@ -8,23 +8,60 @@ on:
 permissions:
   contents: write
 
+
 jobs:
   release:
+    name: Build and Publish Release
     runs-on: ubuntu-latest
 
     steps:
+
+      # -----------------------------------------
+      # Checkout repository
+      # -----------------------------------------
+
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Create package
+
+      # -----------------------------------------
+      # Create release package
+      # -----------------------------------------
+
+      - name: Create release package
         run: |
           mkdir -p release
-          tar -czf release/pomodoro-${GITHUB_REF_NAME}.tar.gz \
+
+          tar -czf "release/pomodoro-${GITHUB_REF_NAME}.tar.gz" \
             --exclude=".git" \
             --exclude=".github" \
+            --exclude="release" \
+            --exclude="logs" \
             .
 
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v3
+      # -----------------------------------------
+      # Verify package
+      # -----------------------------------------
+
+      - name: Verify release package
+        run: |
+          test -f "release/pomodoro-${GITHUB_REF_NAME}.tar.gz"
+
+          echo "Release package created:"
+          ls -lh "release/pomodoro-${GITHUB_REF_NAME}.tar.gz"
+
+      # -----------------------------------------
+      # Create GitHub Release
+      # -----------------------------------------
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
         with:
-          files: release/pomodoro-${{ github.ref_name }}.tar.gz
+          files: "release/pomodoro-${{ github.ref_name }}.tar.gz"
+
+            # -----------------------------------------
+      # Validate GitHub Release
+      # -----------------------------------------
+      - name: Validate release package
+        run: |
+          tar -tzf "release/pomodoro-${GITHUB_REF_NAME}.tar.gz"
